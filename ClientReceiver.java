@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ClientReceiver extends Thread {
 
   private BufferedReader server;
-  private ListOfPlayers online;
+  private Scores scoreBoard;
   private String nickname;
 
   ClientReceiver(BufferedReader server,String nickname) {
@@ -17,20 +17,22 @@ public class ClientReceiver extends Thread {
   }
 
   public void run() {
-    // Print to the user whatever we get from the server:
+    // Read from the server, also used to update the online user list and the score board:
 	  
     try {
       while (true) {	
         String s = server.readLine();
-        if(s.equals("ONLINE LIST"))
-      	 
-	{
- 		ListOfPlayers.setPlayers(server.readLine()); 
- 		System.out.println(ListOfPlayers.players);
-	}	
+        if(s.equals("ONLINE LIST")) 
+        {
+        	ListOfPlayers.setPlayers(server.readLine()); 
+        }
+        else if(s.equals("SCORE_BOARD"))
+        {
+        	LocalScoreboard.setPlayers(server.readLine());
+        }
         else
         {
-	        if(s!="Player not found")
+	        if(s!="Player not found" && s!=nickname)
 	        {
 	        	Proposal p = new Proposal(s,nickname);
 	        }

@@ -37,6 +37,26 @@ public class ServerReceiver extends Thread {
 		    }
 		    	print.println(oT);
         }
+        if(command.equals("scores"))
+        {
+        	String scoreBoard="";
+        	print.println("SCORE_BOARD");
+        	for(int i=0;i<on.online.size();i++)
+        	{
+        		scoreBoard+=on.online.get(i);
+        		scoreBoard+=" ";
+        		scoreBoard+=Scores.getScore(on.online.get(i));
+        		scoreBoard+=".";
+        	}
+        	for(int i=0;i<on.offline.size();i++)
+        	{
+        		scoreBoard+=on.offline.get(i);
+        		scoreBoard+=" ";
+        		scoreBoard+=Scores.getScore(on.offline.get(i));
+        		scoreBoard+=".";
+        	}
+        	print.println(scoreBoard);
+        }
         else
         {
         	boolean flag=false;
@@ -48,7 +68,7 @@ public class ServerReceiver extends Thread {
 	        		print.println("Player not found");
 	        	else 
 	        	{
-	        		Message c = new Message(command,myClientsName);
+	        		Message c = new Message(myClientsName,command);
 	        		MessageQueue queue = table.getQueue(command);
 	        		queue.offer(c);	
 	        	}

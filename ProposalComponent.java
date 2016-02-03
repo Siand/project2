@@ -10,7 +10,12 @@ public class ProposalComponent extends JPanel{
 	
 		JLabel challenger = new JLabel("You have been challenged to a game by " +nickname);
 		JButton accept = new JButton("Accept");
+		accept.addActionListener(e->
+		{
+			
+		});
 		JButton reject = new JButton("Reject");
+		reject.addActionListener(e->System.exit(0));
 		add(challenger);
 		add(accept);
 		add(reject);

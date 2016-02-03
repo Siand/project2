@@ -3,7 +3,7 @@ public class Message {
   private final String sender;
   private final String challenged;
 
-  Message(String sender, String challenged) {
+  Message(String sender, String challenged) {	
     this.sender = sender;
     this.challenged = challenged;
   }
