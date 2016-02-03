@@ -8,7 +8,6 @@ public class BoardView extends JPanel implements Observer
 {
 	private NoughtsCrossesModel model;
 	private JButton[][] cell;
-	
 	public BoardView(NoughtsCrossesModel model)
 	{
 		super();
@@ -49,6 +48,7 @@ public class BoardView extends JPanel implements Observer
 		{
 			for(int j = 0; j < 3; j++)
 			{
+				
 				if(model.get(i, j) == NoughtsCrosses.CROSS)
 				{
 					cell[i][j].setText("X");
@@ -65,6 +65,10 @@ public class BoardView extends JPanel implements Observer
 					boolean notOver = (model.whoWon() ==
 						NoughtsCrosses.BLANK);
 					cell[i][j].setEnabled(notOver);
+				}
+				if(!model.getTurn())
+				{
+					cell[i][j].setEnabled(false);
 				}
 			}
 		}

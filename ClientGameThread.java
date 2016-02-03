@@ -8,27 +8,32 @@ public class ClientGameThread extends Thread {
 	{
 		NoughtsCrossesGUI game= new NoughtsCrossesGUI(nickname);
 		int x=0,y=0,lastTurn=44,turn;
-		if(!myTurn)
+		while(!game.getModel().winner())
 		{
-			myTurn=true;
-			try {
-				String z=(fromServer.readLine());
-				x=getx(z);
-				y=gety(z);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			game.getModel().turn(x, y);
-		}
-		else
-		{
-			while((turn=game.getModel().getLastTurn())!=lastTurn)
+			if(!myTurn)
 			{
-				lastTurn=turn;
-				toServer.println(nickname+"."+String.valueOf(lastTurn));
+				game.getModel().setTurn(false);
+				myTurn=true;
+				try {
+					String z=(fromServer.readLine());
+					x=getx(z);
+					y=gety(z);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				game.getModel().turn(x, y);
 			}
-			myTurn=false;
+			else
+			{
+				game.getModel().setTurn(true);
+				while((turn=game.getModel().getLastTurn())!=lastTurn)
+				{
+					lastTurn=turn;
+					toServer.println(nickname+"|."+String.valueOf(lastTurn));
+				}
+				myTurn=false;
+			}
 		}
 	}
 	private int getx(String move)

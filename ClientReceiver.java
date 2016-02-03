@@ -10,10 +10,12 @@ public class ClientReceiver extends Thread {
   private BufferedReader server;
   private Scores scoreBoard;
   private String nickname;
+  private PrintStream SO;
 
-  ClientReceiver(BufferedReader server,String nickname) {
+  ClientReceiver(BufferedReader server,String nickname,PrintStream s) {
     this.server = server;
     this.nickname=nickname;
+    this.SO=s;
   }
 
   public void run() {
@@ -30,11 +32,35 @@ public class ClientReceiver extends Thread {
         {
         	LocalScoreboard.setPlayers(server.readLine());
         } 
+        else if(s.contains("GAME/|"))
+        {
+        	int length=s.length();
+        	s=s.substring(6,length);
+        	length-=6;
+        	for(int i=0;i<length;i++)
+        	{
+        		if(s.charAt(i)==' ')
+        		{
+        			if(nickname.equals(s.substring(0,i)))
+        			{
+        				System.out.println(s.substring(i+1,length));
+        				ClientGameThread game = new ClientGameThread(s.substring(i+1,length), true, server, SO);
+        						game.start();
+        			}
+        			else
+        			{
+        				System.out.println(s.substring(0,i));
+        				ClientGameThread game = new ClientGameThread(s.substring(0,i), false, server, SO);
+        						game.start();
+        			}
+        		}
+        	}
+        }
         else
         {
 	        if(!s.equals("Player not found") && !s.equals(nickname) && !s.equals("Player is in a game"))
 		    {
-		        	Proposal p = new Proposal(s,nickname);
+		        	Proposal p = new Proposal(s,nickname,SO);
 		    }
         }
       }

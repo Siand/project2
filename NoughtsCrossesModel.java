@@ -4,6 +4,7 @@ public class NoughtsCrossesModel extends Observable
 {
 	private NoughtsCrosses oxo;
 	private int lastTurn=55;
+	private boolean turn;
 	
 	public NoughtsCrossesModel(NoughtsCrosses oxo)
 	{
@@ -70,4 +71,24 @@ Start a new game
 		setChanged();
 		notifyObservers();
 	}
+
+/**
+ * Is there a winner?
+ */
+	public boolean winner()
+	{
+		return (oxo.winner(NoughtsCrosses.CROSS)|| oxo.winner(NoughtsCrosses.NOUGHT));
+	}
+
+	
+	public boolean getTurn() {
+		return turn;
+	}
+	public void setTurn(boolean b)
+	{
+		this.turn=b;
+		setChanged();
+		notifyObservers();
+	}
+ 
 }

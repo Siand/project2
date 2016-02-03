@@ -67,7 +67,7 @@ class Client {
     //Create a list for online users
     // Create two client threads:
     ClientSender sender = new ClientSender(nickname,toServer,fromServer);
-    ClientReceiver receiver = new ClientReceiver(fromServer,nickname);
+    ClientReceiver receiver = new ClientReceiver(fromServer,nickname,toServer);
 
 
     // Run them in parallel:

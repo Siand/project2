@@ -117,7 +117,7 @@ Let the player whose turn it is play at a particular location
 	}
 	
 	
-	private boolean winner(int player)
+	public boolean winner(int player)
 	{
 		return
 			(board[0][0] == player && board[0][1] == player && board[0][2] == player) ||

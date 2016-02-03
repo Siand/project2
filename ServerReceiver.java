@@ -68,11 +68,13 @@ public class ServerReceiver extends Thread {
         		if(command.charAt(i)=='|')
         		{
                 	String playerName=command.substring(i+1,length);
+                	System.out.println(playerName);
+                	System.out.println(ingame.getInGame(playerName));
                 	if(!ingame.getInGame(playerName))
                 	{
                 		boolean flag=false;
         	        	for(int j=0;j<on.online.size();j++)
-        	        		if(command.equals(on.online.get(j)))
+        	        		if(playerName.equals(on.online.get(j)))
         	        			flag=true;
         	        	if(!flag)
         	        		print.println("Player not found");
@@ -87,11 +89,39 @@ public class ServerReceiver extends Thread {
         		}
         	}
         }
+        else if(command.contains("STARTGAME/|"))
+        {
+        	int length=command.length();
+        	String playerNames="",p1N="",p2N="";
+        	for(int i=0;i<length;i++)
+        		if(command.charAt(i)=='|')
+        		{
+        			playerNames=command.substring(i+1,length);
+        		}
+        	length=playerNames.length();
+        	for(int i=0;i<length;i++)
+        	{
+        		if(playerNames.charAt(i)==' ')
+        		{
+        			p1N=playerNames.substring(0, i);
+        			p2N=playerNames.substring(i+1, length);
+
+
+        		}
+        		
+        	}
+        	Message m1 = new Message("GAME/|"+p1N+" "+p2N,p1N);
+    		MessageQueue queue1 = table.getQueue(p1N);
+    		queue1.offer(m1);	
+    		
+        	Message m2 = new Message("GAME/|"+p1N+" "+p2N,p2N);
+    		MessageQueue queue2 = table.getQueue(p2N);
+    		queue2.offer(m2);	
+        }
+        else if(command.contains("|."))
+        {
         	
-       // TODO 	else 
-        		//connection
-        		// game init
-        		// updates?????
+        }
       }
     }
     catch (IOException e) {
