@@ -29,13 +29,13 @@ public class ClientReceiver extends Thread {
         else if(s.equals("SCORE_BOARD"))
         {
         	LocalScoreboard.setPlayers(server.readLine());
-        }
+        } 
         else
         {
-	        if(s!="Player not found" && s!=nickname)
-	        {
-	        	Proposal p = new Proposal(s,nickname);
-	        }
+	        if(!s.equals("Player not found") && !s.equals(nickname) && !s.equals("Player is in a game"))
+		    {
+		        	Proposal p = new Proposal(s,nickname);
+		    }
         }
       }
     }

@@ -12,14 +12,16 @@ public class ServerReceiver extends Thread {
   private PrintStream print;
   private ClientTable table;
   private Online on;
+  private inGame ingame;
 
-  public ServerReceiver(String n, BufferedReader c, PrintStream p, Scores s,ClientTable clientTable,Online o) {
+  public ServerReceiver(String n, BufferedReader c, PrintStream p, Scores s,ClientTable clientTable,Online o,inGame in) {
     myClientsName = n;
     myClient = c;
     scores = s;
     print=p;
     table = clientTable;
     on =o;
+    ingame=in;
   }
 
   public void run() {
@@ -57,21 +59,33 @@ public class ServerReceiver extends Thread {
         	}
         	print.println(scoreBoard);
         }
-        else
+        if(command.contains("INGAME/|"))
         {
-        	boolean flag=false;
-	
-	        	for(int i=0;i<on.online.size();i++)
-	        		if(command.equals(on.online.get(i)))
-	        			flag=true;
-	        	if(!flag)
-	        		print.println("Player not found");
-	        	else 
-	        	{
-	        		Message c = new Message(myClientsName,command);
-	        		MessageQueue queue = table.getQueue(command);
-	        		queue.offer(c);	
-	        	}
+        	int length = command.length();
+
+        	for(int i=0;i<length;i++)
+        	{
+        		if(command.charAt(i)=='|')
+        		{
+                	String playerName=command.substring(i+1,length);
+                	if(!ingame.getInGame(playerName))
+                	{
+                		boolean flag=false;
+        	        	for(int j=0;j<on.online.size();j++)
+        	        		if(command.equals(on.online.get(j)))
+        	        			flag=true;
+        	        	if(!flag)
+        	        		print.println("Player not found");
+        	        	else 
+        	        	{
+        	        		Message c = new Message(myClientsName,playerName);
+        	        		MessageQueue queue = table.getQueue(playerName);
+        	        		queue.offer(c);	
+        	        	}
+                	}
+                	else print.println("Player is in a game");
+        		}
+        	}
         }
         	
        // TODO 	else 

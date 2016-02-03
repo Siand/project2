@@ -1,11 +1,12 @@
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class ProposalComponent extends JPanel{
-	public ProposalComponent(String nickname){
+	public ProposalComponent(String nickname,JFrame frame){
 		
 	
 		JLabel challenger = new JLabel("You have been challenged to a game by " +nickname);
@@ -15,7 +16,7 @@ public class ProposalComponent extends JPanel{
 			
 		});
 		JButton reject = new JButton("Reject");
-		reject.addActionListener(e->System.exit(0));
+		reject.addActionListener(e->frame.dispose());
 		add(challenger);
 		add(accept);
 		add(reject);

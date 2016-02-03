@@ -3,6 +3,7 @@ import java.util.Observable;
 public class NoughtsCrossesModel extends Observable
 {
 	private NoughtsCrosses oxo;
+	private int lastTurn=55;
 	
 	public NoughtsCrossesModel(NoughtsCrosses oxo)
 	{
@@ -39,8 +40,10 @@ Let the player whose turn it is play at a particular location
 	public void turn(int i, int j)
 	{
 		oxo.turn(i, j);
+		lastTurn=(1+i)*10+j+1;
 		setChanged();
 		notifyObservers();
+		
 	}
 	
 		
@@ -54,6 +57,10 @@ Determine who (if anyone) has won
 	}
 	
 	
+	public int getLastTurn()
+	{
+		return lastTurn;
+	}
 /**
 Start a new game
 */

@@ -13,7 +13,7 @@ public class Challenger extends JPanel {
 	challenge.addActionListener(e->
 	{
 		String x = opponent.getText();
-		server.println(x);
+		server.println("INGAME/|"+x);
 	});
 	setLayout(new BorderLayout());
 	add(opponent,BorderLayout.CENTER);

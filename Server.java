@@ -16,6 +16,7 @@ public class Server {
     Scores scores = new Scores();
     Turns turns =new Turns();
     ClientTable clientTable = new ClientTable();
+    inGame in = new inGame();
     
     if (args.length != 1) {
         System.err.println("Usage: java Server Port Number");
@@ -78,10 +79,11 @@ public class Server {
         o.online.add(clientName);
         scores.add(clientName);
         clientTable.add(clientName);
+        in.add(clientName);
 
         // We create and start a new thread to read/write from/to the client:
         
-        (new ServerReceiver(clientName, fromClient, toClient, scores,clientTable,o)).start();
+        (new ServerReceiver(clientName, fromClient, toClient, scores,clientTable,o,in)).start();
 
         // We create and start a new thread to write to the client:
         (new ServerSender(turns, toClient, clientName,clientTable)).start();

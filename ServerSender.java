@@ -23,11 +23,6 @@ public class ServerSender extends Thread {
     	MessageQueue challenge =  table.getQueue(nickname);
     	Message m= challenge.take();
     	client.println(m);
-    	
-    //	int x = (int)turns.getTurns(nickname).getX();
-    //	int y = (int)turns.getTurns(nickname).getY();
-    //	client.println(x);
-    //	client.println(y);
     }
   }
 }
