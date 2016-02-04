@@ -15,4 +15,8 @@ public class inGame {
 	{
 		in.put(nickname,false);
 	}
+	public void setInGame(String n,boolean ingame)
+	{
+		in.put(n,ingame);
+	}
 }

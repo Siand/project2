@@ -2,21 +2,23 @@ import javax.swing.JFrame;
 
 public class NoughtsCrossesGUI 
 {
-	private NoughtsCrosses game;
 	private NoughtsCrossesModel model;
-	public NoughtsCrossesGUI(String nickname)
+	private BoardView board;
+	public NoughtsCrossesGUI()
 	{
-		this.game = new NoughtsCrosses();
-		NoughtsCrossesComponent comp = new NoughtsCrossesComponent(game);
-		this.model= comp.getModel();
+		NoughtsCrosses nc = new NoughtsCrosses();
+		this.model = new NoughtsCrossesModel(nc);
+		board = new BoardView(model);
+		model.addObserver(board);
 		JFrame frame = new JFrame("Noughts and Crosses");
 		frame.setSize(400, 400);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.add(comp);
+		frame.add(board);
 		frame.setVisible(true);
 	}
-	public NoughtsCrossesModel getModel()
+	public BoardView getBoard()
 	{
-		return this.model;
+		return this.board;
 	}
+	
 }

@@ -4,24 +4,23 @@ import java.awt.BorderLayout;
 public class NoughtsCrossesComponent extends JPanel
 {
 	private NoughtsCrossesModel model;
+	private BoardView board;
 	public NoughtsCrossesComponent(NoughtsCrosses game)
 	{
 		super();
 		NoughtsCrossesModel m = new NoughtsCrossesModel(game);
 		this.model=m;
-		BoardView board = new BoardView(model);
-		ButtonPanel controls = new ButtonPanel(model);
+		board = new BoardView(model);
 		
 		model.addObserver(board);
 		
 		setLayout(new BorderLayout());
 		
 		add(board, BorderLayout.CENTER);
-		add(controls, BorderLayout.SOUTH);
 	}
-	public NoughtsCrossesModel getModel()
+	public BoardView getBoard()
 	{
-		return this.model;
+		return this.board;
 	}
 	
 }

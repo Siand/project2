@@ -47,6 +47,13 @@ Let the player whose turn it is play at a particular location
 		
 	}
 	
+	public void enemyTurn(int i, int j)
+	{
+		oxo.turn(i, j);
+		setChanged();
+		notifyObservers();
+		
+	}
 		
 /**
 Determine who (if anyone) has won

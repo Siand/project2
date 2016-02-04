@@ -28,7 +28,7 @@ public class ServerReceiver extends Thread {
     try {
       while (true) {
         String command = myClient.readLine();
-        if(command.equals("online"))
+   if(command.equals("online"))
         {
         	print.println("ONLINE LIST");
 		    String oT="";
@@ -37,9 +37,9 @@ public class ServerReceiver extends Thread {
 		    	oT+=on.online.get(i);
 		    	oT+=" ";
 		    }
-		    	print.println(oT);
+		    print.println(oT);
         }
-        if(command.equals("scores"))
+  if(command.equals("scores"))
         {
         	String scoreBoard="";
         	print.println("SCORE_BOARD");
@@ -59,7 +59,7 @@ public class ServerReceiver extends Thread {
         	}
         	print.println(scoreBoard);
         }
-        if(command.contains("INGAME/|"))
+   if(command.contains("2INGAME/|"))
         {
         	int length = command.length();
 
@@ -68,8 +68,8 @@ public class ServerReceiver extends Thread {
         		if(command.charAt(i)=='|')
         		{
                 	String playerName=command.substring(i+1,length);
-                	System.out.println(playerName);
-                	System.out.println(ingame.getInGame(playerName));
+                //	System.out.println(playerName);
+                //	System.out.println(ingame.getInGame(playerName));
                 	if(!ingame.getInGame(playerName))
                 	{
                 		boolean flag=false;
@@ -89,7 +89,7 @@ public class ServerReceiver extends Thread {
         		}
         	}
         }
-        else if(command.contains("STARTGAME/|"))
+  else if(command.contains("STARTGAME/|"))
         {
         	int length=command.length();
         	String playerNames="",p1N="",p2N="";
@@ -113,14 +113,65 @@ public class ServerReceiver extends Thread {
         	Message m1 = new Message("GAME/|"+p1N+" "+p2N,p1N);
     		MessageQueue queue1 = table.getQueue(p1N);
     		queue1.offer(m1);	
+    		ingame.setInGame(p1N, true);
     		
         	Message m2 = new Message("GAME/|"+p1N+" "+p2N,p2N);
     		MessageQueue queue2 = table.getQueue(p2N);
     		queue2.offer(m2);	
+    		ingame.setInGame(p2N, true);
         }
-        else if(command.contains("|."))
+  else if(command.contains("IS_INAGAME/|"))
+        {
+        	int length = command.length();
+
+        	for(int i=0;i<length;i++)
+        	{
+        		if(command.charAt(i)=='|')
+        		{
+                	String playerName=command.substring(i+1,length);
+                	print.println(ingame.getInGame(playerName));
+        		}
+        	}
+        }
+  else if(command.contains("INGAME/|"))
+        {
+        	int length = command.length();
+        	for(int i=0;i<length;i++)
+        	{
+        		if(command.charAt(i)=='|')
+        		{
+        			for(int j=i;j<length;j++)
+        			{
+        				if(command.charAt(j)==' ')
+        				{
+        					String name=command.substring(i+1,j);
+        					boolean ing=false;
+        					if(command.charAt(length-1)=='t')
+        					{
+        						ing =true;
+        					}
+        					ingame.setInGame(name,ing);
+        				}
+        			}
+        		}
+        	}
+        }
+  else if(command.contains("/|"))
         {
         	
+        	int length = command.length();
+        	for(int i=0;i<length;i++)
+        	{
+        		String nickname="";
+        		if(command.charAt(i)=='|')
+        		{
+        			nickname=command.substring(0,i-1);
+    				String move=command.substring(i+1, length);
+    				Message m2 = new Message(move,nickname);
+    				MessageQueue queue = table.getQueue(nickname);
+    				queue.offer(m2);	
+        		}
+        	}
         }
       }
     }

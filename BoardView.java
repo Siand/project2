@@ -8,6 +8,7 @@ public class BoardView extends JPanel implements Observer
 {
 	private NoughtsCrossesModel model;
 	private JButton[][] cell;
+	private boolean turn=true;
 	public BoardView(NoughtsCrossesModel model)
 	{
 		super();
@@ -73,6 +74,18 @@ public class BoardView extends JPanel implements Observer
 			}
 		}
 		repaint();
+	}
+	public void setTurn(boolean t)
+	{
+		this.model.setTurn(t);
+	}
+	public boolean getTurn()
+	{
+		return this.model.getTurn();
+	}
+	public NoughtsCrossesModel getModel()
+	{
+		return this.model;
 	}
 }	
 					
