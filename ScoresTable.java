@@ -1,4 +1,6 @@
+import java.awt.GridLayout;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -6,33 +8,18 @@ import javax.swing.JLabel;
 public class ScoresTable
 {
 	JFrame frame;
-	private String scores="";
-	private JLabel scoresTable;
-	public ScoresTable()
+	private ScoresTableComponent comp;
+	public ScoresTable(String x)
 	{
-		 scoresTable = new JLabel(scores);
-		 
+		comp= new ScoresTableComponent(x);
 		frame = new JFrame("Players Online");
 		frame.setSize(250, 150);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.add(scoresTable);
+		frame.add(comp);
 		frame.setVisible(false);
 	}
 	public void setVisible(boolean b)
 	{
 		frame.setVisible(b);
-	}
-	public void setTable(String x)
-	{
-		String newString="";
-		int j=0;
-		for(int i=0;i<x.length();i++)
-			if(x.charAt(i)=='.')
-			{
-				newString=newString+x.substring(j,i);
-				newString=newString+"\n";
-				j=i+1;
-			}
-		   scoresTable.setText(newString);
 	}
 }
